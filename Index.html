@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>وين تروح فلوس قهوتك؟</title>
+<meta name="description" content="احسب شكثر تصرف على القهوة بره البيت في السنة، وقارنها بتكلفتها لو سويتها بالبيت حسب متوسط أسعار البن في الكويت.">
+<meta property="og:title" content="وين تروح فلوس قهوتك؟">
+<meta property="og:description" content="حاسبة توضحلك شكثر تصرف على قهوة الكوفي شوب سنويًا، ومقارنتها بتكلفتها بالبيت.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%98%95%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Tajawal', sans-serif;
+    background: #F2E8D9;
+    color: #2E1F17;
+    padding: 20px 14px 60px;
+    max-width: 480px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+  .hero { text-align: center; padding: 18px 6px 26px; }
+  .hero h1 { font-size: 26px; font-weight: 900; color: #2E1F17; line-height: 1.35; }
+  .hero p { font-size: 14px; color: #6B5541; margin-top: 8px; }
+  .card {
+    background: #FFFCF7;
+    border: 1px solid #E2D2B8;
+    border-radius: 16px;
+    padding: 18px 16px;
+    margin-bottom: 16px;
+  }
+  .card h2 { font-size: 15px; font-weight: 700; color: #8C5A2B; margin-bottom: 14px; }
+  .field { margin-bottom: 14px; }
+  .field:last-child { margin-bottom: 0; }
+  .field label { display: block; font-size: 13px; font-weight: 500; color: #4A3A2C; margin-bottom: 6px; }
+  select, input[type=number] {
+    width: 100%; height: 42px;
+    border: 1px solid #D8C6A8; border-radius: 10px;
+    background: #FFFCF7;
+    font-family: 'Tajawal', sans-serif; font-size: 14px; color: #2E1F17;
+    padding: 0 12px;
+  }
+  select:focus, input[type=number]:focus {
+    outline: none; border-color: #B8763E;
+    box-shadow: 0 0 0 3px rgba(184,118,62,0.15);
+  }
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .price-hint { font-size: 11px; color: #9A8A72; margin-top: 5px; }
+
+  .homecost-box {
+    background: #F5EEDF;
+    border: 1px dashed #D8C6A8;
+    border-radius: 12px;
+    padding: 12px 14px;
+  }
+  .homecost-box .top {
+    display: flex; justify-content: space-between; align-items: baseline;
+  }
+  .homecost-box .top .t { font-size: 13px; font-weight: 500; color: #4A3A2C; }
+  .homecost-box .top .v { font-size: 18px; font-weight: 900; color: #8C5A2B; direction: ltr; }
+  .homecost-box .breakdown { font-size: 11.5px; color: #9A8A72; margin-top: 6px; }
+
+  .reveal { text-align: center; padding: 6px 4px 4px; }
+  .reveal .label { font-size: 13px; color: #6B5541; font-weight: 500; }
+  .reveal .amount { font-size: 40px; font-weight: 900; color: #A8402F; margin: 6px 0 2px; direction: ltr; }
+  .reveal .sub { font-size: 12px; color: #9A8A72; }
+
+  .bars { margin-top: 18px; }
+  .bar-row { margin-bottom: 14px; }
+  .bar-row:last-child { margin-bottom: 0; }
+  .bar-top { display: flex; justify-content: space-between; font-size: 12.5px; font-weight: 500; margin-bottom: 6px; color: #4A3A2C; }
+  .bar-top span.val { direction: ltr; display: inline-block; }
+  .bar-track { background: #EFE4D0; border-radius: 8px; height: 14px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 8px; transition: width 0.5s ease; }
+  .bar-fill.cafe { background: #B33F2E; }
+  .bar-fill.home { background: #6B7A5E; }
+
+  .savings-card {
+    background: #EEF1E7; border: 1px solid #C9D4B9; border-radius: 16px;
+    padding: 18px 16px; margin-bottom: 16px; text-align: center;
+  }
+  .savings-card .label { font-size: 13px; color: #4C6B4F; font-weight: 500; }
+  .savings-card .amount { font-size: 32px; font-weight: 900; color: #4C6B4F; margin: 6px 0 4px; direction: ltr; }
+  .savings-card .note { font-size: 12.5px; color: #5C6E52; }
+
+  .equiv-list { margin-top: 4px; }
+  .equiv-item {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 4px; border-bottom: 1px solid #E7DCC5; font-size: 13.5px;
+  }
+  .equiv-item:last-child { border-bottom: none; }
+  .equiv-item .name { color: #2E1F17; }
+  .equiv-item .price { color: #9A8A72; font-size: 12px; direction: ltr; }
+  .equiv-item.covered .name { font-weight: 700; color: #8C5A2B; }
+  .equiv-item .check { color: #4C6B4F; font-weight: 700; font-size: 15px; min-width: 20px; text-align: center; }
+  .equiv-item .dash { color: #C9BBA0; min-width: 20px; text-align: center; }
+
+  .tip {
+    font-size: 13px; color: #4A3A2C; background: #FBF1DE;
+    border-right: 3px solid #C17F3E; border-radius: 0 10px 10px 0;
+    padding: 10px 12px; margin-top: 10px;
+  }
+
+  .footnote { text-align: center; font-size: 11px; color: #A79878; margin-top: 18px; padding: 0 20px; }
+</style>
+</head>
+<body>
+
+  <div class="hero">
+    <h1>قهوتك... وين تروح فلوسها؟</h1>
+    <p>حط بياناتك وشوف شكثر تصرف على القهوة بره البيت في السنة</p>
+  </div>
+
+  <div class="card">
+    <h2>قهوة الكوفي شوب</h2>
+    <div class="field">
+      <label for="coffeeType">نوع القهوة</label>
+      <select id="coffeeType"></select>
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label for="cafePrice">سعر الكوب (د.ك)</label>
+        <input type="number" id="cafePrice" step="0.050" min="0">
+      </div>
+      <div class="field">
+        <label for="cupsPerDay">أكواب باليوم</label>
+        <input type="number" id="cupsPerDay" step="1" min="0" value="1">
+      </div>
+    </div>
+
+    <div class="field">
+      <label>تكلفة نفس الكوب لو سويته بالبيت</label>
+      <div class="homecost-box">
+        <div class="top">
+          <span class="t">محسوبة تلقائيًا</span>
+          <span class="v" id="homePriceDisplay">0.000 د.ك</span>
+        </div>
+        <div class="breakdown" id="homeBreakdown"></div>
+      </div>
+      <div class="price-hint">مبنية على متوسط سعر البن في الكويت وكمية البن المستخدمة لكل كوب، مو رقم تكتبه انت</div>
+    </div>
+  </div>
+
+  <div class="card reveal">
+    <div class="label">اللي تصرفه على هالقهوة في السنة</div>
+    <div class="amount" id="yearlyCafeAmount">0.000 د.ك</div>
+    <div class="sub" id="monthlyCafeSub">شهريًا 0.000 د.ك</div>
+
+    <div class="bars">
+      <div class="bar-row">
+        <div class="bar-top"><span>كوفي شوب</span><span class="val" id="barCafeVal">0.000 د.ك</span></div>
+        <div class="bar-track"><div class="bar-fill cafe" id="barCafe" style="width:0%"></div></div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-top"><span>لو سويتها بالبيت</span><span class="val" id="barHomeVal">0.000 د.ك</span></div>
+        <div class="bar-track"><div class="bar-fill home" id="barHome" style="width:0%"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="savings-card">
+    <div class="label">اللي ممكن توفره كل سنة لو سويتها بالبيت</div>
+    <div class="amount" id="savingsAmount">0.000 د.ك</div>
+    <div class="note" id="savingsNote">يعني توفير ٪0 من صرفيتك على القهوة</div>
+  </div>
+
+  <div class="card">
+    <div class="tip" id="tipBox">قهوة البيت مو بس أرخص، هي كمان عادة أسرع من طابور الكوفي شوب.</div>
+  </div>
+
+  <div class="footnote">
+    سعر الكوب بالكوفي شوب تقريبي وقابل للتعديل. تكلفة البيت محسوبة من متوسط أسعار البن في الكويت (نطاق تقريبي 4.8 إلى 13 د.ك للكيلو حسب النوع) وليست رقم ثابت تتحكم فيه.
+  </div>
+
+<script>
+  // كل نوع قهوة: سعر الكوفي شوب الافتراضي، غرامات البن بالكوب، سعر الكيلو بالدينار الكويتي، وإذا فيه حليب
+  var coffeeTypes = [
+    { name: "قهوة عربية / تركية", cafe: 0.700, gramsPerCup: 7,  beanPricePerKg: 6.0,  milkMl: 0 },
+    { name: "أمريكانو / فلتر",     cafe: 0.800, gramsPerCup: 15, beanPricePerKg: 5.0,  milkMl: 0 },
+    { name: "لاتيه / كابتشينو",    cafe: 1.200, gramsPerCup: 18, beanPricePerKg: 8.0,  milkMl: 150 },
+    { name: "إسبريسو",             cafe: 0.900, gramsPerCup: 18, beanPricePerKg: 9.0,  milkMl: 0 },
+    { name: "قهوة مختصة (سبيشلتي)", cafe: 1.750, gramsPerCup: 18, beanPricePerKg: 13.0, milkMl: 0 }
+  ];
+
+  var MILK_PRICE_PER_LITER = 0.450; // متوسط سعر الحليب الطازج بالكويت
+
+  var typeSelect = document.getElementById('coffeeType');
+  coffeeTypes.forEach(function(t, i) {
+    var opt = document.createElement('option');
+    opt.value = i;
+    opt.textContent = t.name;
+    typeSelect.appendChild(opt);
+  });
+
+  var cafePriceInput = document.getElementById('cafePrice');
+  var cupsInput = document.getElementById('cupsPerDay');
+
+  function fmt(n) {
+    if (!isFinite(n)) n = 0;
+    return n.toFixed(3) + ' د.ك';
+  }
+
+  function computeHomeCost(t) {
+    var beanCost = (t.gramsPerCup / 1000) * t.beanPricePerKg;
+    var milkCost = (t.milkMl / 1000) * MILK_PRICE_PER_LITER;
+    return beanCost + milkCost;
+  }
+
+  function loadDefaults() {
+    var t = coffeeTypes[typeSelect.value];
+    cafePriceInput.value = t.cafe.toFixed(3);
+
+    var homeCost = computeHomeCost(t);
+    document.getElementById('homePriceDisplay').textContent = fmt(homeCost);
+
+    var breakdown = t.gramsPerCup + 'غم بن × ' + t.beanPricePerKg.toFixed(1) + ' د.ك/كغم';
+    if (t.milkMl > 0) {
+      breakdown += ' + ' + t.milkMl + 'مل حليب × ' + MILK_PRICE_PER_LITER.toFixed(3) + ' د.ك/لتر';
+    }
+    document.getElementById('homeBreakdown').textContent = breakdown;
+  }
+
+  function render() {
+    var cafePrice = parseFloat(cafePriceInput.value) || 0;
+    var t = coffeeTypes[typeSelect.value];
+    var homePrice = computeHomeCost(t);
+    var cups = parseFloat(cupsInput.value) || 0;
+
+    var dailyCafe = cafePrice * cups;
+    var dailyHome = homePrice * cups;
+    var monthlyCafe = dailyCafe * 30;
+    var monthlyHome = dailyHome * 30;
+    var yearlyCafe = dailyCafe * 365;
+    var yearlyHome = dailyHome * 365;
+    var yearlySavings = Math.max(0, yearlyCafe - yearlyHome);
+    var savingsPct = yearlyCafe > 0 ? (yearlySavings / yearlyCafe) * 100 : 0;
+
+    document.getElementById('yearlyCafeAmount').textContent = fmt(yearlyCafe);
+    document.getElementById('monthlyCafeSub').textContent = 'شهريًا ' + fmt(monthlyCafe);
+
+    var maxVal = Math.max(yearlyCafe, yearlyHome, 0.001);
+    document.getElementById('barCafe').style.width = (yearlyCafe / maxVal * 100) + '%';
+    document.getElementById('barHome').style.width = (yearlyHome / maxVal * 100) + '%';
+    document.getElementById('barCafeVal').textContent = fmt(yearlyCafe);
+    document.getElementById('barHomeVal').textContent = fmt(yearlyHome);
+
+    document.getElementById('savingsAmount').textContent = fmt(yearlySavings);
+    document.getElementById('savingsNote').textContent =
+      'يعني توفير ' + Math.round(savingsPct) + '٪ من صرفيتك على القهوة';
+
+    var tip = document.getElementById('tipBox');
+    if (yearlySavings <= 0) {
+      tip.textContent = 'حاليًا سعر البيت والكوفي شوب متقاربين، جرّب تعدّل سعر الكوفي شوب حسب واقعك.';
+    } else if (savingsPct >= 70) {
+      tip.textContent = 'أكثر من ' + Math.round(savingsPct) + '٪ من صرفيتك على القهوة تروح لهامش السعر بس، مو للقهوة نفسها.';
+    } else {
+      tip.textContent = 'قهوة البيت مو بس أرخص، هي كمان عادة أسرع من طابور الكوفي شوب.';
+    }
+  }
+
+  typeSelect.addEventListener('change', function() { loadDefaults(); render(); });
+  cafePriceInput.addEventListener('input', render);
+  cupsInput.addEventListener('input', render);
+
+  loadDefaults();
+  render();
+</script>
+</body>
+</html>
